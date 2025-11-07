@@ -1,70 +1,117 @@
-# Getting Started with Create React App
+# 📝 AI Notes App
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+A **modern, AI-powered note-taking** application built with **React, Tailwind CSS, and Framer Motion**.  
+Create, organize, lock, and enhance your notes with intelligent features like **AI summarization** and **AI rewriting** — all while keeping your data stored securely on your device.
 
-## Available Scripts
+> ✨ *Fast. Minimal. Smart. Private.*
 
-In the project directory, you can run:
+---
 
-### `npm start`
+## ✨ Key Features
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+| Feature | Description |
+|--------|-------------|
+| 🤖 **AI Summarization** | Get short and clear summaries of long notes using OpenAI AI models. |
+| ✍️ **AI Rewriting** | Automatically rewrite, improve, or reword your text with one click. |
+| 🔒 **PIN Lock** | Lock individual notes or the entire app with a PIN. |
+| 🎨 **Color-Coded Notes** | Choose custom colors to visually organize your notes. |
+| 🏷️ **Tag System** | Add tags and filter notes by categories. |
+| 🔍 **Smart Search** | Search notes by title and content instantly. |
+| 🌓 **Dark / Light Mode** | Seamless theme switching that matches your system settings. |
+| 📥 **Import Notes** | Import from **PDF, DOCX, JSON** files. |
+| 📤 **Export Notes** | Export to **PDF, DOCX, JSON** for backups or sharing. |
+| 💾 **Local Storage** | All notes are stored **locally** — your data stays **with you**. |
+| 📱 **Responsive UI** | Works perfectly on **desktop, tablet, and mobile**. |
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+---
 
-### `npm test`
+## 🖥️ Tech Stack
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+| Technology | Purpose |
+|-----------|---------|
+| **React 18** | Frontend UI |
+| **Tailwind CSS** | Styling & theme |
+| **Framer Motion** | Smooth animations |
+| **Lucide React** | Modern icons |
+| **OpenAI API** | AI summarization & rewriting |
+| **jsPDF** | PDF exporting |
+| **docx** | Word file exporting |
+| **mammoth** | Word importing |
+| **pdfjs-dist** | PDF importing |
 
-### `npm run build`
+---
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+## 🚀 Getting Started
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+Create your `.env` file in the project root:
 
-### `npm run eject`
+REACT_APP_OPENAI_API_KEY=your_api_key_here
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+Run the app:
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+---
 
-## Learn More
+| Light Mode | Dark Mode |
+|-----------|-----------|
+| ![Light Mode](./Lightmode.png) | ![Dark Mode](./Darkmode.png) |
+---
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+## 🔒 Privacy & Security
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+- No data is uploaded to servers
+- All notes are stored in **LocalStorage**
+- AI requests only send the text you choose to process
+- Lock your notes with a **PIN**
 
-### Code Splitting
+Your data = **Your control** ✅
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+---
 
-### Analyzing the Bundle Size
+## 🤝 Contributing
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
+Contributions, issues, and feature requests are welcome!  
+Feel free to open a PR or start a discussion.
 
-### Making a Progressive Web App
+---
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
+## 📄 License
 
-### Advanced Configuration
+Copyright (c) 2025 Dishank
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
+All Rights Reserved.
 
-### Deployment
+This app and associated files are the property of the author. 
+You may not copy, modify, merge, publish, distribute, sublicense, or sell copies 
+of this app without explicit written permission from the owner.
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
+Unauthorized use or distribution of this software is strictly prohibited and 
+may result in civil and/or criminal penalties.
 
-### `npm run build` fails to minify
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+---
+
+
+# 💼 My Portfolio
+
+A **personal portfolio website** built with **React, Tailwind CSS, and Framer Motion**.  
+Showcases my projects, skills, and work in a clean and modern UI with both **light and dark themes**.
+
+
+## 🚀 Live Link
+
+Check it out: [https://dishank-portfolio.vercel.app/](https://dishank-portfolio.vercel.app/)  
+
+
+
+## 🤝 Contributing
+
+This is a personal portfolio, but feedback is welcome!  
+Open an issue or contact me for suggestions.  
+
+---
+
+### ⭐ If you like this project, consider giving it a **star** on GitHub!  
+It helps others discover my work ✨

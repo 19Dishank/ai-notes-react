@@ -148,8 +148,8 @@ const NoteCard = ({ note, onEdit, onDelete, onLock, onUnlock, onRewrite }) => {
       const isBullet = trimmedLine.startsWith('•') || trimmedLine.startsWith('-') || trimmedLine.match(/^\d+\./);
       if (isBullet) {
         // Extract the bullet/number prefix
-        const bulletMatch = trimmedLine.match(/^([•\-\d+\.]+)\s*(.+)$/);
-        const content = bulletMatch && bulletMatch[2] ? bulletMatch[2] : trimmedLine.replace(/^[•\-\d+\.\s]+/, '');
+        const bulletMatch = trimmedLine.match(/^([•\-\d+.]+)\s*(.+)$/);
+        const content = bulletMatch && bulletMatch[2] ? bulletMatch[2] : trimmedLine.replace(/^[•\-\d+.\s]+/, '');
         const isNumbered = /^\d+\./.test(trimmedLine);
         const number = isNumbered ? trimmedLine.match(/^\d+\./)?.[0] : null;
         

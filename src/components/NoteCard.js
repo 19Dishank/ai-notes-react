@@ -1,4 +1,5 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
+import { createPortal } from 'react-dom';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Edit, Trash2, Sparkles, Copy, Check, Calendar, X, Lock, Unlock, Wand2 } from 'lucide-react';
 import { summarizeNote } from '../utils/aiService';
@@ -13,6 +14,8 @@ const NoteCard = ({ note, onEdit, onDelete, onLock, onUnlock, onRewrite }) => {
   const [copied, setCopied] = useState(false);
   const [showPasswordModal, setShowPasswordModal] = useState(false);
   const [passwordMode, setPasswordMode] = useState('lock'); // 'lock' or 'unlock'
+  const cardRef = useRef(null);
+  const summaryButtonRef = useRef(null);
 
   const isLocked = note.locked === true;
   const noteColor = note?.color || 'default';
@@ -26,6 +29,28 @@ const NoteCard = ({ note, onEdit, onDelete, onLock, onUnlock, onRewrite }) => {
       setSummary('');
     }
   }, [isLocked, showSummary]);
+
+  // Prevent background scrolling when summary is open
+  useEffect(() => {
+    if (showSummary) {
+      // Save current scroll position
+      const scrollY = window.scrollY;
+      // Lock body scroll
+      document.body.style.position = 'fixed';
+      document.body.style.top = `-${scrollY}px`;
+      document.body.style.width = '100%';
+      document.body.style.overflow = 'hidden';
+
+      return () => {
+        // Restore scroll position
+        document.body.style.position = '';
+        document.body.style.top = '';
+        document.body.style.width = '';
+        document.body.style.overflow = '';
+        window.scrollTo(0, scrollY);
+      };
+    }
+  }, [showSummary]);
 
   const handleLock = () => {
     // Check if PIN exists - if not, show set PIN modal first
@@ -49,6 +74,7 @@ const NoteCard = ({ note, onEdit, onDelete, onLock, onUnlock, onRewrite }) => {
       onUnlock(note.id);
     }
   };
+
 
   const handleSummarize = async () => {
     if (isLocked) return; // Disable if locked
@@ -147,7 +173,7 @@ const NoteCard = ({ note, onEdit, onDelete, onLock, onUnlock, onRewrite }) => {
   };
 
   return (
-    <div className="note-card-container">
+    <div className="note-card-container" ref={cardRef}>
       <motion.div
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
@@ -262,6 +288,7 @@ const NoteCard = ({ note, onEdit, onDelete, onLock, onUnlock, onRewrite }) => {
       <div className="flex-shrink-0 relative space-y-2">
         <div className="grid grid-cols-2 gap-2">
           <motion.button
+            ref={summaryButtonRef}
             onClick={handleSummarize}
             disabled={isSummarizing || isLocked}
             whileHover={!isLocked ? { scale: 1.02 } : {}}
@@ -310,86 +337,78 @@ const NoteCard = ({ note, onEdit, onDelete, onLock, onUnlock, onRewrite }) => {
           </motion.button>
         </div>
 
-        <AnimatePresence>
-          {showSummary && (
+        {/* Summary Modal - Simple and Clean */}
+        {showSummary && summary && typeof document !== 'undefined' && createPortal(
+          <>
+            {/* Backdrop */}
             <motion.div
-              className="summary-dimmer"
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
-              transition={{ duration: 0.2 }}
+              className="fixed inset-0 bg-black/50 backdrop-blur-sm z-[10000]"
+              onClick={() => setShowSummary(false)}
             />
-          )}
-        </AnimatePresence>
 
-        <AnimatePresence>
-          {showSummary && summary && (
-            <motion.div
-              initial={{ opacity: 0, y: -10, scale: 0.95 }}
-              animate={{ opacity: 1, y: 0, scale: 1 }}
-              exit={{ opacity: 0, y: -10, scale: 0.95 }}
-              transition={{ 
-                duration: 0.25,
-                ease: [0.4, 0, 0.2, 1]
-              }}
-              className="note-card-summary"
-            >
-              <div className="summary-panel relative bg-gradient-to-br from-slate-50 via-sky-50 to-white dark:from-slate-950/95 dark:via-primary-900/30 dark:to-slate-950/95 rounded-2xl shadow-2xl border border-slate-200 dark:border-primary-900/50 overflow-hidden backdrop-blur-xl ring-1 ring-black/5 dark:ring-white/10">
-                <span className="summary-panel-pointer" />
+            {/* Modal */}
+            <div className="fixed inset-0 z-[10001] flex items-center justify-center p-4 pointer-events-none">
+              <motion.div
+                initial={{ opacity: 0, scale: 0.95, y: 20 }}
+                animate={{ opacity: 1, scale: 1, y: 0 }}
+                exit={{ opacity: 0, scale: 0.95, y: 20 }}
+                transition={{ duration: 0.2 }}
+                className="bg-white dark:bg-gray-900 rounded-2xl shadow-2xl max-w-2xl w-full max-h-[80vh] overflow-hidden pointer-events-auto border border-purple-200/50 dark:border-purple-500/30"
+                onClick={(e) => e.stopPropagation()}
+              >
                 {/* Header */}
-                <div className="px-5 py-4 bg-gradient-to-r from-sky-500/10 via-primary-500/10 to-sky-500/10 dark:from-primary-500/25 dark:via-primary-600/25 dark:to-primary-500/25 border-b border-slate-200 dark:border-primary-900/40">
-                  <div className="flex items-center justify-between">
-                  <div className="flex items-center gap-2.5">
-                      <div className="p-1.5 bg-primary-500/25 dark:bg-primary-400/25 rounded-lg shadow-sm">
-                        <Sparkles className="w-4 h-4 text-primary-600 dark:text-primary-400" />
+                <div className="px-6 py-4 border-b border-purple-200/50 dark:border-purple-500/30 bg-gradient-to-br from-purple-50 via-pink-50 to-cyan-50 dark:from-purple-950/40 dark:via-pink-950/30 dark:to-cyan-950/40">
+                  <div className="flex items-start justify-between gap-4">
+                    <div className="flex items-center gap-3 flex-1 min-w-0">
+                      <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-purple-500 to-pink-500 dark:from-purple-500 dark:to-pink-500 flex items-center justify-center flex-shrink-0 shadow-lg shadow-purple-500/30">
+                        <Sparkles className="w-5 h-5 text-white" />
                       </div>
-                      <h4 className="font-semibold text-gray-900 dark:text-white text-sm">
-                        AI Summary
-                      </h4>
+                      <div className="flex-1 min-w-0">
+                        <h3 className="text-lg font-bold bg-gradient-to-r from-purple-600 to-pink-600 dark:from-purple-400 dark:to-pink-400 bg-clip-text text-transparent mb-1">
+                          AI Summary
+                        </h3>
+                        <p className="text-sm text-gray-700 dark:text-gray-300 truncate font-medium" title={note.title}>
+                          {note.title}
+                        </p>
+                      </div>
                     </div>
-                  <div className="flex items-center gap-3">
-                    <motion.button
-                      onClick={handleCopySummary}
-                      whileHover={{ scale: 1.05 }}
-                      whileTap={{ scale: 0.95 }}
-                      className="p-2 text-gray-600 dark:text-gray-400 hover:text-primary-600 dark:hover:text-primary-400 hover:bg-gray-100 dark:hover:bg-gray-700 rounded-lg transition-colors duration-150"
-                      aria-label="Copy summary"
-                      title="Copy summary"
-                    >
-                      {copied ? (
-                        <motion.div
-                          initial={{ scale: 0 }}
-                          animate={{ scale: 1 }}
-                          transition={{ type: 'spring', stiffness: 500, damping: 30 }}
-                        >
-                          <Check className="w-4 h-4 text-green-600 dark:text-green-400" />
-                        </motion.div>
-                      ) : (
-                        <Copy className="w-4 h-4" />
-                      )}
-                    </motion.button>
-                    <button
-                      onClick={() => setShowSummary(false)}
-                      className="p-2 text-red-500 hover:text-red-600 dark:text-red-400 dark:hover:text-red-300 hover:bg-red-50 dark:hover:bg-red-900/40 rounded-lg transition-colors duration-150"
-                      aria-label="Close summary"
-                      title="Close summary"
-                    >
-                      <X className="w-4 h-4" />
-                    </button>
-                  </div>
+                    <div className="flex items-center gap-2 flex-shrink-0">
+                      <button
+                        onClick={handleCopySummary}
+                        className="p-2 rounded-xl hover:bg-purple-100 dark:hover:bg-purple-900/30 text-gray-600 dark:text-gray-400 hover:text-purple-600 dark:hover:text-purple-400 transition-all duration-200 hover:scale-110"
+                        title="Copy summary"
+                      >
+                        {copied ? (
+                          <Check className="w-5 h-5 text-green-500 dark:text-green-400" />
+                        ) : (
+                          <Copy className="w-5 h-5" />
+                        )}
+                      </button>
+                      <button
+                        onClick={() => setShowSummary(false)}
+                        className="p-2 rounded-xl hover:bg-pink-100 dark:hover:bg-pink-900/30 text-gray-600 dark:text-gray-400 hover:text-pink-600 dark:hover:text-pink-400 transition-all duration-200 hover:scale-110"
+                        title="Close"
+                      >
+                        <X className="w-5 h-5" />
+                      </button>
+                    </div>
                   </div>
                 </div>
-                
+
                 {/* Content */}
-                <div className="px-5 py-4 max-h-[400px] overflow-y-auto custom-scrollbar">
-                  <div className="text-sm text-gray-700 dark:text-gray-300 space-y-3 leading-relaxed">
+                <div className="px-6 py-4 overflow-y-auto max-h-[calc(80vh-80px)] bg-gradient-to-b from-white to-purple-50/30 dark:from-gray-900 dark:to-purple-950/20">
+                  <div className="text-gray-800 dark:text-gray-200 space-y-3 leading-relaxed">
                     {formatSummaryDisplay(summary)}
                   </div>
                 </div>
-              </div>
-            </motion.div>
-          )}
-        </AnimatePresence>
+              </motion.div>
+            </div>
+          </>,
+          document.body
+        )}
       </div>
 
       {/* Password Modal */}

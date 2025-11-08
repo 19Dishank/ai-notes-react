@@ -73,43 +73,7 @@ code {
   }
 }
 
-/* Floating summary overlay */
-.summary-dimmer {
-  position: fixed;
-  inset: 0;
-  background: rgba(15, 23, 42, 0.35);
-  backdrop-filter: blur(2px);
-  z-index: 55;
-}
-
-.note-card-summary {
-  position: absolute;
-  top: 0%;
-  /* left: 5%; */
-  transform: translate(-50%, -50%);
-  width: min(28rem, calc(100% - 0rem));
-  z-index: 60;
-  pointer-events: none;
-}
-
-.note-card-summary .summary-panel {
-  position: relative;
-  max-height: calc(100% - 0rem);
-  overflow-y: auto;
-  pointer-events: auto;
-}
-
-.note-card-summary .summary-panel-pointer {
-  display: none;
-}
-
-@media (max-width: 640px) {
-  .note-card-summary {
-    width: min(92vw, 24rem);
-    left: 50%;
-    transform: translate(-50%, -50%);
-  }
-}
+/* Summary Modal - Clean and Simple */
 
 /* Custom scrollbar for summary */
 .custom-scrollbar::-webkit-scrollbar {

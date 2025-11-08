@@ -43,13 +43,55 @@ Create, organize, lock, and enhance your notes with intelligent features like **
 
 ## 🚀 Getting Started
 
+### Local Development
 
-Create your `.env` file in the project root:
+1. **Clone the repository**
+   ```bash
+   git clone https://github.com/19Dishank/ai-notes-react.git
+   cd fitverse
+   ```
 
-REACT_APP_OPENAI_API_KEY=your_api_key_here
+2. **Install dependencies**
+   ```bash
+   npm install
+   ```
 
+3. **Create your `.env` file** in the project root:
+   ```env
+   REACT_APP_OPENAI_API_KEY=your_api_key_here
+   ```
+   > Note: An API key is mandatory for proper execution. If the API key is missing or invalid, the application will encounter runtime errors.
 
-Run the app:
+4. **Run the app**
+   ```bash
+   npm start
+   ```
+
+### 🚀 Deploying to Vercel
+
+To deploy this app on Vercel with your API key:
+
+1. **Push your code to GitHub** (make sure `.env` is in `.gitignore` - it already is ✅)
+
+2. **Import your project to Vercel**
+   - Go to [vercel.com](https://vercel.com)
+   - Click "Add New" → "Project"
+   - Import your GitHub repository
+
+3. **Add Environment Variables in Vercel**
+   - In your Vercel project dashboard, go to **Settings** → **Environment Variables**
+   - Add a new variable:
+     - **Name**: `REACT_APP_OPENAI_API_KEY`
+     - **Value**: Your actual API key
+     - **Environment**: Select all (Production, Preview, Development)
+   - Click **Save**
+
+4. **Deploy**
+   - Vercel will automatically detect it's a React app
+   - Click **Deploy** (or it will auto-deploy on push)
+   - Your app will be live with the API key working! 🎉
+
+> **Note**: Environment variables in Vercel are encrypted and only accessible at build/runtime. Your API key stays secure and won't be exposed in the client-side code.
 
 
 ---
@@ -79,7 +121,7 @@ Feel free to open a PR or start a discussion.
 
 ## 📄 License
 
-Copyright (c) 2025 Dishank
+Copyright (c) 2025 Dishank Patel
 
 All Rights Reserved.
 
@@ -97,7 +139,7 @@ may result in civil and/or criminal penalties.
 # 💼 My Portfolio
 
 A **personal portfolio website** built with **React, Tailwind CSS, and Framer Motion**.  
-Showcases my projects, skills, and work in a clean and modern UI with both **light and dark themes**.
+Showcases my projects, skills, and work in a clean and modern UI with **dark theme**.
 
 
 ## 🚀 Live Link

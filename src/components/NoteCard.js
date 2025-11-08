@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { createPortal } from 'react-dom';
-import { motion, AnimatePresence } from 'framer-motion';
+import { motion } from 'framer-motion';
 import { Edit, Trash2, Sparkles, Copy, Check, Calendar, X, Lock, Unlock, Wand2 } from 'lucide-react';
 import { summarizeNote } from '../utils/aiService';
 import PasswordModal from './PasswordModal';
